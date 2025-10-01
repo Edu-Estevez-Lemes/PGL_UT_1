@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'videoclub-list',
+    loadChildren: () => import('./videoclub-list/videoclub-list.module').then( m => m.VideoclubListPageModule)
+  },
 ];
 
 @NgModule({

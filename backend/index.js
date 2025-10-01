@@ -14,10 +14,10 @@ db.sequelize.sync().then(() => {
 
 // Ruta raíz simple
 app.get("/", (req, res) => {
-  res.json({ message: "Bienvenido al Videoclub 🎬" });
+   res.json({ message: "Bienvenido al Videoclub 🎬" });
 });
 
-// 👉 Importar las rutas de clientes, peliculas y alquileres
+//Importar las rutas de clientes, peliculas y alquileres
 require("./routes/cliente.routes")(app);
 require("./routes/pelicula.routes")(app);
 require("./routes/alquiler.routes")(app);
