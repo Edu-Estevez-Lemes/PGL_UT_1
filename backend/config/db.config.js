@@ -11,3 +11,4 @@ module.exports = {
     idle: 10000
   }
 };
+// DATOS DE LA CONFIGURACIÓN DE LA CONEXIÓN CON LA BASE DE DATOS
