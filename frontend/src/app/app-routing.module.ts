@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'videoclub-list',
     loadChildren: () => import('./videoclub-list/videoclub-list.module').then( m => m.VideoclubListPageModule)
   },
+  {
+    path: 'clientes-list',
+    loadChildren: () => import('./clientes-list/clientes-list.module').then( m => m.ClientesListPageModule)
+  },
 ];
 
 @NgModule({

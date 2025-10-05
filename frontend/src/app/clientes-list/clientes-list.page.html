@@ -1,0 +1,25 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Clientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-spinner *ngIf="cargando"></ion-spinner>
+
+  <ion-card *ngIf="error">
+    <ion-card-header><ion-card-title>Error</ion-card-title></ion-card-header>
+    <ion-card-content>{{ error }}</ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="!cargando && !error">
+    <ion-item *ngFor="let c of clientes">
+      <ion-label>
+        <h2>{{ c.nombre }}</h2>
+        <p>{{ c.email }}</p>
+        <p *ngIf="c.telefono">{{ c.telefono }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
