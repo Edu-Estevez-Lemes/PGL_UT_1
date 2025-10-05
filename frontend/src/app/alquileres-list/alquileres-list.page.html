@@ -17,9 +17,11 @@
       <ion-label>
         <h2>{{ a.Pelicula?.titulo || ('Pelicula #' + a.peliculaId) }}</h2>
         <p>{{ a.Cliente?.nombre || ('Cliente #' + a.clienteId) }}</p>
-        <p>Inicio: {{ a.fecha_inicio }} · Fin: {{ a.fecha_fin || '—' }}</p>
+        <p>
+          Inicio: {{ a.fecha_inicio | date:'dd/MM/yyyy' }}  <!-- Formateamos las fechas para hacerlas más legibles -->
+          · Fin: {{ a.fecha_fin ? (a.fecha_fin | date:'dd/MM/yyyy') : '—' }}
+        </p>
       </ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
-
