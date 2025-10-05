@@ -4,14 +4,16 @@ const cors = require("cors");
 
 const app = express();
 
+app.use(cors({ origin: "http://localhost:8100" }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Sincronizar BD
+// Sincronización con la BBDD
 db.sequelize.sync().then(() => {
-  console.log("✅ Base de datos sincronizada");
+  console.log("✅✅✅ Base de datos sincronizada ✅✅✅");
 }).catch(err => {
-  console.error("❌ Error sincronizando:", err);
+  console.error("❌❌❌ ERROR DE SINCRONIZACIÓN ❌❌❌:", err);
 });
 
 // Ruta raíz simple
@@ -26,6 +28,5 @@ require("./routes/alquiler.routes")(app);
 
 // Arrancar servidor
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+app.listen(PORT, () => {console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
