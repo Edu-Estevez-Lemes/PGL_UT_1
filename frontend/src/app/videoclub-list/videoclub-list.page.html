@@ -1,19 +1,24 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>videoclub-list</ion-title>
+    <ion-title>Películas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-list>
-  <ion-item *ngFor = "let of b ">
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-spinner *ngIf="cargando"></ion-spinner>
 
-  </ion-item>
-</ion-list>
+  <ion-card *ngIf="error">
+    <ion-card-header><ion-card-title>Error</ion-card-title></ion-card-header>
+    <ion-card-content>{{ error }}</ion-card-content>
+  </ion-card>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">videoclub-list</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list *ngIf="!cargando && !error">
+    <ion-item *ngFor="let p of peliculas">
+      <ion-label>
+        <h2>{{ p.titulo }}</h2>
+        <p>{{ p.genero || '—' }} · {{ p.anio || 's/d' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
