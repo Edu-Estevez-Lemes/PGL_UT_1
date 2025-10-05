@@ -1,0 +1,25 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Alquileres</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-spinner *ngIf="cargando"></ion-spinner>
+
+  <ion-card *ngIf="error">
+    <ion-card-header><ion-card-title>Error</ion-card-title></ion-card-header>
+    <ion-card-content>{{ error }}</ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="!cargando && !error">
+    <ion-item *ngFor="let a of alquileres">
+      <ion-label>
+        <h2>{{ a.Pelicula?.titulo || ('Pelicula #' + a.peliculaId) }}</h2>
+        <p>{{ a.Cliente?.nombre || ('Cliente #' + a.clienteId) }}</p>
+        <p>Inicio: {{ a.fecha_inicio }} · Fin: {{ a.fecha_fin || '—' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
