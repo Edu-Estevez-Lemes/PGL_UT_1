@@ -1,0 +1,48 @@
+.page-bg {
+  --background: #000; /* negro puro */
+  color: #fff;
+}
+
+ion-list {
+  background: transparent;
+}
+
+.pelicula-item {
+  --background: transparent;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+  padding-inline-start: 8px;
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(242, 201, 76, 0.25);
+    transform: translateY(-2px);
+  }
+
+  ion-icon[slot="start"] {
+    color: #f2c94c;
+    font-size: 22px;
+  }
+
+  ion-label h2 {
+    color: #fff; /* blanco para el título */
+    font-weight: 600;
+  }
+
+  ion-label p {
+    color: #f2c94c; /* amarillo para el género y año */
+    margin: 0;
+  }
+}
+
+/* Botones (solo editar y eliminar) */
+ion-button[fill="clear"] {
+  --background: transparent;
+}
+
+/* FAB de añadir */
+ion-fab-button {
+  --background: #f2c94c;
+  color: #000;
+  box-shadow: 0 0 15px rgba(242, 201, 76, 0.55);
+}

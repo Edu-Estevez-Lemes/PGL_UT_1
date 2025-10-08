@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header translucent>
   <ion-toolbar color="dark">
     <ion-title>TapeLab</ion-title>
   </ion-toolbar>
@@ -10,12 +10,18 @@
       <ion-col size="12">
         <h1 class="app-title">🎬 Bienvenido a TapeLab 🎬</h1>
         <p class="subtitle">Explora, alquila y disfruta del mejor contenido</p>
+
+        <!-- 🕒 Reloj -->
+        <div class="reloj">
+          <h2>{{ hora }}</h2>
+          <p>{{ fecha }}</p>
+        </div>
       </ion-col>
     </ion-row>
 
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-md="4">
-        <ion-card button routerLink="/peliculas-list" class="keycard">
+        <ion-card button routerLink="/videoclub-list" class="keycard">
           <ion-icon name="film-outline"></ion-icon>
           <p>Películas</p>
         </ion-card>
@@ -41,7 +47,7 @@
 <ion-footer>
   <ion-toolbar color="dark">
     <ion-title size="small" class="ion-text-center">
-      © 2025 PGL - TapeLab - UT_1
+      © 2025 TapeLab
     </ion-title>
   </ion-toolbar>
 </ion-footer>

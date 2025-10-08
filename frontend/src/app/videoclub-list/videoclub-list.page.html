@@ -1,24 +1,48 @@
 <ion-header translucent="true">
-  <ion-toolbar>
-    <ion-title>Películas</ion-title>
+  <ion-toolbar color="dark">
+    <ion-title>🎞️ Películas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-spinner *ngIf="cargando"></ion-spinner>
+<ion-content [fullscreen]="true" class="ion-padding page-bg">
 
-  <ion-card *ngIf="error">
-    <ion-card-header><ion-card-title>Error</ion-card-title></ion-card-header>
+  <ion-spinner *ngIf="cargando" name="dots" color="warning"></ion-spinner>
+
+  <ion-card *ngIf="error" color="danger">
+    <ion-card-header>
+      <ion-card-title>Error</ion-card-title>
+    </ion-card-header>
     <ion-card-content>{{ error }}</ion-card-content>
   </ion-card>
 
-  <ion-list *ngIf="!cargando && !error">
-    <ion-item *ngFor="let p of peliculas">
+  <!-- Lista -->
+  <ion-list *ngIf="!cargando && !error" inset>
+    <ion-item *ngFor="let p of peliculas" lines="none" class="pelicula-item">
+      <ion-icon name="film-outline" slot="start" color="warning"></ion-icon>
       <ion-label>
         <h2>{{ p.titulo }}</h2>
         <p>{{ p.genero || '—' }} · {{ p.anio || 's/d' }}</p>
       </ion-label>
+
+      <ion-buttons slot="end">
+        <ion-button fill="clear" color="medium" (click)="verPelicula(p)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="warning" (click)="editarPelicula(p)">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="eliminarPelicula(p)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
-</ion-content>
 
+  <!-- FAB para añadir -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="warning" (click)="nuevaPelicula()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
