@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { VideoclubListPageRoutingModule } from './videoclub-list-routing.module';
 
 import { VideoclubListPage } from './videoclub-list.page';
+import { PeliculaModalComponent } from './pelicula-modal/pelicula-modal.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { VideoclubListPage } from './videoclub-list.page';
     IonicModule,
     VideoclubListPageRoutingModule
   ],
-  declarations: [VideoclubListPage]
+  declarations: [VideoclubListPage, PeliculaModalComponent]
 })
 export class VideoclubListPageModule {}

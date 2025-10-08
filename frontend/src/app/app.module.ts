@@ -5,15 +5,14 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-import { provideHttpClient, withFetch } from '@angular/common/http'; // <— clave
+import { provideHttpClient, withFetch } from '@angular/common/http'; // <— Necesario
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideHttpClient(withFetch()) // habilita HttpClient (como en las slides)
+    provideHttpClient(withFetch()) // habilita HttpClient
   ],
   bootstrap: [AppComponent],
 })

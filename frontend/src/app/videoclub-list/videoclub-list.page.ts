@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalController, AlertController } from '@ionic/angular';
+
 import { PeliculaService, Pelicula } from '../pelicula-service';
+import { PeliculaModalComponent } from './pelicula-modal/pelicula-modal.component';
 
 @Component({
   selector: 'app-videoclub-list',
   templateUrl: './videoclub-list.page.html',
   styleUrls: ['./videoclub-list.page.scss'],
-  standalone: false
+  standalone: false,
 })
 export class VideoclubListPage implements OnInit {
   peliculas: Pelicula[] = [];
@@ -15,6 +18,8 @@ export class VideoclubListPage implements OnInit {
 
   constructor(
     private peliculasApi: PeliculaService,
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     private router: Router
   ) {}
 
@@ -25,35 +30,64 @@ export class VideoclubListPage implements OnInit {
   private cargarPeliculas(): void {
     this.cargando = true;
     this.peliculasApi.getAll().subscribe({
-      next: (rows: Pelicula[]) => {
-        this.peliculas = rows;
+      next: (rows) => { this.peliculas = rows; this.cargando = false; },
+      error: (e) => {
+        this.error = (e as any)?.error?.message ?? 'Error cargando películas';
         this.cargando = false;
-      },
-      error: (e: unknown) => {
-        const msg = (e as any)?.error?.message ?? 'Error cargando películas';
-        this.error = msg;
-        this.cargando = false;
-        console.error('PELIS ERROR:', e);
       }
     });
   }
 
-  verPelicula(p: Pelicula) {
-    console.log('Ver detalles:', p);
-    // Aquí podrías abrir un modal con más info o navegar a /peliculas-form/:id
-  }
+  // ───────── Añadir ─────────
+  async nuevaPelicula() {
+    const modal = await this.modalCtrl.create({
+      component: PeliculaModalComponent,
+      componentProps: {
+        pelicula: { titulo: '', genero: '', anio: new Date().getFullYear() } as Pelicula,
+        modo: 'crear'
+      }
+    });
+    await modal.present();
 
-  editarPelicula(p: Pelicula) {
-    this.router.navigate(['/peliculas-form', p.id]);
-  }
-
-  eliminarPelicula(p: Pelicula) {
-    if (confirm(`¿Eliminar "${p.titulo}"?`)) {
-      this.peliculasApi.delete(p.id!).subscribe(() => this.cargarPeliculas());
+    const { data, role } = await modal.onWillDismiss();
+    if (role === 'ok' && data) {
+      this.peliculasApi.create(data).subscribe(() => this.cargarPeliculas());
     }
   }
 
-  nuevaPelicula() {
-    this.router.navigate(['/peliculas-form']);
+  // ───────── Editar ─────────
+  async editarPelicula(p: Pelicula) {
+    const modal = await this.modalCtrl.create({
+      component: PeliculaModalComponent,
+      componentProps: {
+        pelicula: { ...p },
+        modo: 'editar'
+      }
+    });
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+    if (role === 'ok' && data) {
+      this.peliculasApi.update(p.id!, data).subscribe(() => this.cargarPeliculas());
+    }
+  }
+
+  // ───────── Eliminar ─────────
+  async eliminarPelicula(p: Pelicula) {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmar eliminación',
+      message: `¿Seguro que quieres eliminar <strong>${p.titulo}</strong>?`,
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Eliminar',
+          role: 'ok',
+          handler: () => {
+            this.peliculasApi.delete(p.id!).subscribe(() => this.cargarPeliculas());
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

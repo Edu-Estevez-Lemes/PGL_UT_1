@@ -1,0 +1,32 @@
+<ion-header translucent>
+  <ion-toolbar color="dark">
+    <ion-title>
+      {{ modo === 'crear' ? 'Añadir Película' : 'Editar Película' }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding page-bg">
+  <ion-item>
+    <ion-label position="floating">Título</ion-label>
+    <ion-input [(ngModel)]="pelicula.titulo" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Género</ion-label>
+    <ion-input [(ngModel)]="pelicula.genero"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Año</ion-label>
+    <ion-input type="number" [(ngModel)]="pelicula.anio"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" color="warning" (click)="guardar()">
+    {{ modo === 'crear' ? 'Guardar' : 'Actualizar' }}
+  </ion-button>
+</ion-content>
+
