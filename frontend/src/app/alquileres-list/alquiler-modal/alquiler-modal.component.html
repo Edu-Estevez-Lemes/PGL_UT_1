@@ -1,0 +1,58 @@
+<ion-header translucent>
+  <ion-toolbar color="dark">
+    <ion-title>{{ modo === 'crear' ? 'Nuevo Alquiler' : 'Editar Alquiler' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding page-bg">
+
+  <!-- Cliente -->
+  <ion-item class="custom-item">
+    <ion-label position="floating">Cliente</ion-label>
+    <ion-select [(ngModel)]="alquiler.clienteId" interface="popover" placeholder="Seleccionar cliente">
+      <ion-select-option *ngFor="let c of clientes" [value]="c.id">{{ c.nombre }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Película -->
+  <ion-item class="custom-item">
+    <ion-label position="floating">Película</ion-label>
+    <ion-select [(ngModel)]="alquiler.peliculaId" interface="popover" placeholder="Seleccionar película">
+      <ion-select-option *ngFor="let p of peliculas" [value]="p.id">{{ p.titulo }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Fechas -->
+<ion-item class="custom-item">
+  <ion-label position="floating">Fecha de inicio</ion-label>
+  <ion-input
+    type="date"
+    [(ngModel)]="alquiler.fecha_inicio"
+    (ionChange)="calcularPrecio()">
+  </ion-input>
+</ion-item>
+
+<ion-item class="custom-item">
+  <ion-label position="floating">Fecha de fin</ion-label>
+  <ion-input
+    type="date"
+    [(ngModel)]="alquiler.fecha_fin"
+    (ionChange)="calcularPrecio()">
+  </ion-input>
+</ion-item>
+
+  <!-- Precio -->
+  <ion-card class="price-card" *ngIf="alquiler.precio">
+    <ion-card-content>
+      💰 <strong>{{ alquiler.precio | currency:'EUR':'symbol':'1.2-2' }}</strong>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" color="warning" (click)="guardar()">
+    {{ modo === 'crear' ? 'Guardar' : 'Actualizar' }}
+  </ion-button>
+
+</ion-content>

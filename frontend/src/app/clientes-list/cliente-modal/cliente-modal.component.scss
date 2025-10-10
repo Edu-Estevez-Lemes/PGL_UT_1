@@ -1,0 +1,59 @@
+/* Fondo y tipografía base del modal */
+.page-bg {
+  --background: #000;
+  color: #fff;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+/* Header oscuro coherente */
+ion-header,
+ion-toolbar {
+  --background: #111;
+  color: #fff;
+}
+
+ion-title {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ====== CAMPOS ====== */
+ion-item {
+  --background: #111;
+  --color: #fff;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  --highlight-color-focused: #f2c94c;
+}
+
+/* Label flotante SIEMPRE amarillo */
+ion-label {
+  color: #f2c94c !important;
+}
+
+ion-item.item-has-focus ion-label,
+ion-item.item-has-value ion-label,
+ion-item.item-has-placeholder ion-label {
+  color: #f2c94c !important;
+}
+
+/* Texto del input + placeholder */
+ion-input {
+  --color: #fff;
+  --placeholder-color: #f2c94c;
+  --placeholder-opacity: 1;
+}
+
+ion-input::part(native) {
+  color: #fff;
+}
+ion-input::part(placeholder) {
+  color: #f2c94c;
+  opacity: 1;
+}
+
+/* Botón guardar */
+ion-button {
+  font-weight: 600;
+  letter-spacing: 1px;
+}

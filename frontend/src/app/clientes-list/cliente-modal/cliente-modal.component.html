@@ -1,0 +1,32 @@
+<ion-header translucent>
+  <ion-toolbar color="dark">
+    <ion-title>
+      {{ modo === 'crear' ? 'Añadir Cliente' : 'Editar Cliente' }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding page-bg">
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="cliente.nombre" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Email</ion-label>
+    <ion-input type="email" [(ngModel)]="cliente.email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Teléfono</ion-label>
+    <ion-input type="tel" [(ngModel)]="cliente.telefono"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" color="warning" (click)="guardar()">
+    {{ modo === 'crear' ? 'Guardar' : 'Actualizar' }}
+  </ion-button>
+</ion-content>
+

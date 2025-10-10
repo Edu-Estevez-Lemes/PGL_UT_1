@@ -1,0 +1,28 @@
+.page-bg { --background: #000; color: #fff; }
+ion-toolbar { --background: #111; }
+
+.home-btn ion-icon { color: #f2c94c; font-size: 22px; }
+
+.add-btn ion-icon {
+  color: #000; background: #f2c94c; border-radius: 50%;
+  padding: 6px; font-size: 20px; box-shadow: 0 0 10px rgba(242,201,76,.5);
+}
+
+ion-list { background: transparent; }
+
+.alquiler-item {
+  --background: transparent;
+  border-radius: 10px;
+  margin-bottom: .5rem;
+  transition: all .2s ease;
+  padding-inline-start: 8px;
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(242,201,76,.25);
+    transform: translateY(-2px);
+  }
+
+  ion-icon[slot="start"] { color: #f2c94c; font-size: 22px; }
+  ion-label h2 { color: #fff; font-weight: 600; }
+  ion-label p  { color: #f2c94c; margin: 0; }
+}

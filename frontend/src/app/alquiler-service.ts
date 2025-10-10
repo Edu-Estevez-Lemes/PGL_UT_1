@@ -2,28 +2,37 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Reutilizamos los tipos de tus otros servicios (solo tipos)
-import type { Cliente } from './cliente-service';
-import type { Pelicula } from './pelicula-service';
-
 export interface Alquiler {
-  id: number;
-  fecha_inicio: string;          // tal como viene del backend
-  fecha_fin?: string | null;
-  clienteId: number;
-  peliculaId: number;
-  Cliente?: Cliente;             // vienen por include en tu API
-  Pelicula?: Pelicula;
+  id?: number;                     // <- opcional
+  clienteId: number | null;        // <- permite null al crear
+  peliculaId: number | null;       // <- permite null al crear
+  fecha_inicio: string;            // ISO string
+  fecha_fin: string | null;        // puede estar sin cerrar
+  precio?: number;                 // <- opcional
+  Cliente?: { id: number; nombre: string } | null;
+  Pelicula?: { id: number; titulo: string } | null;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AlquilerService {
-  private base = 'http://localhost:8080/api/alquileres';
+  private apiUrl = 'http://localhost:8080/api/alquileres';
 
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Alquiler[]> {
-    return this.http.get<Alquiler[]>(this.base);
+    return this.http.get<Alquiler[]>(this.apiUrl);
+  }
+
+  create(a: Alquiler): Observable<Alquiler> {
+    return this.http.post<Alquiler>(this.apiUrl, a);
+  }
+
+  update(id: number, a: Alquiler): Observable<Alquiler> {
+    return this.http.put<Alquiler>(`${this.apiUrl}/${id}`, a);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
 

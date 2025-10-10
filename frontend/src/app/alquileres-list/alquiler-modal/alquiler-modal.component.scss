@@ -1,0 +1,72 @@
+.page-bg {
+  --background: #000;
+  color: #fff;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+ion-header, ion-toolbar {
+  --background: #111;
+  color: #fff;
+}
+
+ion-title {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Campos */
+.custom-item {
+  --background: #111;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  --highlight-color-focused: #f2c94c;
+}
+
+ion-label {
+  color: #f2c94c !important;
+}
+
+ion-item.item-has-focus ion-label,
+ion-item.item-has-value ion-label {
+  color: #f2c94c !important;
+}
+
+ion-input, ion-select, ion-datetime {
+  --color: #fff;
+  --placeholder-color: #f2c94c;
+  --placeholder-opacity: 1;
+}
+
+/* Tarjeta de precio */
+.price-card {
+  background: #1a1a1a;
+  border: 2px solid #f2c94c;
+  border-radius: 16px;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 1.4rem;
+  color: #f2c94c;
+  box-shadow: 0 0 10px rgba(242, 201, 76, 0.4);
+}
+
+/* Botón */
+ion-button {
+  margin-top: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+ion-input[type="date"]::part(native) {
+  background-color: #111;
+  color: #fff;
+  border: 1px solid #f2c94c;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.95rem;
+}
+
+ion-input[type="date"]:focus::part(native) {
+  outline: none;
+  border-color: #ffd84c;
+}
+

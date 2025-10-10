@@ -1,27 +1,55 @@
-<ion-header translucent="true">
-  <ion-toolbar>
+<ion-header translucent>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Alquileres</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="warning" (click)="nuevoAlquiler()">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-spinner *ngIf="cargando"></ion-spinner>
+<ion-content class="page-bg">
 
-  <ion-card *ngIf="error">
-    <ion-card-header><ion-card-title>Error</ion-card-title></ion-card-header>
+  <!-- Estado de carga -->
+  <ion-spinner *ngIf="cargando" name="crescent" color="warning" class="spinner-center"></ion-spinner>
+
+  <!-- Mensaje de error -->
+  <ion-card *ngIf="error" color="danger">
+    <ion-card-header>
+      <ion-card-title>Error</ion-card-title>
+    </ion-card-header>
     <ion-card-content>{{ error }}</ion-card-content>
   </ion-card>
 
-  <ion-list *ngIf="!cargando && !error">
-    <ion-item *ngFor="let a of alquileres">
+  <!-- Lista de alquileres -->
+  <ion-list *ngIf="!cargando && !error" lines="none">
+    <ion-item *ngFor="let a of alquileres" class="alquiler-item">
+      <ion-icon name="cart-outline" slot="start" color="warning"></ion-icon>
       <ion-label>
-        <h2>{{ a.Pelicula?.titulo || ('Pelicula #' + a.peliculaId) }}</h2>
-        <p>{{ a.Cliente?.nombre || ('Cliente #' + a.clienteId) }}</p>
+        <h2>{{ a.Pelicula?.titulo }}</h2>
         <p>
-          Inicio: {{ a.fecha_inicio | date:'dd/MM/yyyy' }}  <!-- Formateamos las fechas para hacerlas más legibles -->
-          · Fin: {{ a.fecha_fin ? (a.fecha_fin | date:'dd/MM/yyyy') : '—' }}
+          Cliente: <strong>{{ a.Cliente?.nombre }}</strong> ·
+          Desde {{ a.fecha_inicio | date:'dd/MM/yyyy' }} hasta {{ a.fecha_fin | date:'dd/MM/yyyy' }}
+          <span *ngIf="a.precio" class="precio"> · {{ a.precio | currency:'EUR':'symbol':'1.0-0' }}</span>
         </p>
       </ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" color="warning" (click)="editarAlquiler(a)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="eliminarAlquiler(a)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
+
 </ion-content>
+
+
