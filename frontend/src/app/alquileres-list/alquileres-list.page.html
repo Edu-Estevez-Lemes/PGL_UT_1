@@ -1,55 +1,52 @@
-<ion-header translucent>
+<ion-header translucent="true">
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-button routerLink="/home">
-        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
+      <ion-button routerLink="/home" fill="clear" class="home-btn">
+        <ion-icon name="home-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Alquileres</ion-title>
+
+    <ion-title>🛒 Alquileres</ion-title>
+
     <ion-buttons slot="end">
-      <ion-button color="warning" (click)="nuevoAlquiler()">
-        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      <ion-button color="warning" (click)="nuevoAlquiler()" class="add-btn">
+        <ion-icon name="add-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="page-bg">
+<ion-content [fullscreen]="true" class="ion-padding page-bg">
+  <ion-spinner *ngIf="cargando" name="dots" color="warning"></ion-spinner>
 
-  <!-- Estado de carga -->
-  <ion-spinner *ngIf="cargando" name="crescent" color="warning" class="spinner-center"></ion-spinner>
-
-  <!-- Mensaje de error -->
   <ion-card *ngIf="error" color="danger">
-    <ion-card-header>
-      <ion-card-title>Error</ion-card-title>
-    </ion-card-header>
+    <ion-card-header><ion-card-title>Error</ion-card-title></ion-card-header>
     <ion-card-content>{{ error }}</ion-card-content>
   </ion-card>
 
-  <!-- Lista de alquileres -->
-  <ion-list *ngIf="!cargando && !error" lines="none">
-    <ion-item *ngFor="let a of alquileres" class="alquiler-item">
+  <ion-list *ngIf="!cargando && !error" inset>
+    <ion-item *ngFor="let a of alquileres" lines="none" class="alquiler-item">
       <ion-icon name="cart-outline" slot="start" color="warning"></ion-icon>
       <ion-label>
         <h2>{{ a.Pelicula?.titulo }}</h2>
+        <p>Cliente: <strong>{{ a.Cliente?.nombre }}</strong></p>
         <p>
-          Cliente: <strong>{{ a.Cliente?.nombre }}</strong> ·
-          Desde {{ a.fecha_inicio | date:'dd/MM/yyyy' }} hasta {{ a.fecha_fin | date:'dd/MM/yyyy' }}
-          <span *ngIf="a.precio" class="precio"> · {{ a.precio | currency:'EUR':'symbol':'1.0-0' }}</span>
+          Desde {{ a.fecha_inicio | date:'dd/MM/yyyy' }}
+          hasta {{ a.fecha_fin | date:'dd/MM/yyyy' }}
+          <span *ngIf="a.precio" style="color: #f2c94c;">
+            · {{ a.precio | currency:'EUR':'symbol':'1.0-0' }}
+          </span>
         </p>
       </ion-label>
       <ion-buttons slot="end">
         <ion-button fill="clear" color="warning" (click)="editarAlquiler(a)">
-          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          <ion-icon name="create-outline"></ion-icon>
         </ion-button>
         <ion-button fill="clear" color="danger" (click)="eliminarAlquiler(a)">
-          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          <ion-icon name="trash-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-item>
   </ion-list>
-
 </ion-content>
-
 
