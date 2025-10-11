@@ -1,0 +1,12 @@
+Endpoints_Clientes:
+https://www.postman.com/eduardoestevezlemes/workspace/pgl-public/collection/38847486-14d35469-ee56-48a9-928c-57e9fa55c451?action=share&creator=38847486
+
+
+Enpoints_Peliculas:
+
+https://www.postman.com/eduardoestevezlemes/workspace/pgl-public/collection/38847486-4395541b-8b73-425d-81f7-2a198ca999f9?action=share&creator=38847486
+
+
+Endpoints_Alquileres:
+
+https://www.postman.com/eduardoestevezlemes/workspace/pgl-public/collection/38847486-fbda78fe-9375-44a3-a620-9c54f6081127?action=share&creator=38847486
