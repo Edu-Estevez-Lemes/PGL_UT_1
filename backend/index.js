@@ -16,7 +16,7 @@ db.sequelize.sync().then(() => {
   console.error("❌❌❌ ERROR DE SINCRONIZACIÓN ❌❌❌:", err);
 });
 
-// Ruta raíz simple
+// Ruta raíz
 app.get("/", (req, res) => {
    res.json({ message: "Bienvenido al Videoclub 🎬" });
 });
