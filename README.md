@@ -63,13 +63,14 @@ Antes de comenzar, asegúrate de tener instalado:
 # ⚙️ Ejecutando pruebas básicas
 
 Comprueba que puedes acceder a los endpoints desde POSTMAN:
-ENLACE ENDPOINTS POSTMAN: `https://www.postman.com/eduardoestevezlemes/workspace/pgl-public/collection/38847486-14d35469-ee56-48a9-928c-57e9fa55c451?action=share&creator=38847486`
+ENLACE ENDPOINTS POSTMAN: `https://www.postman.com/eduardoestevezlemes/workspace/pgl-public/collection/38847486-14d35469-ee56-48a9-928c-57e9fa55c451?action=share&source=copy-link&creator=38847486`
 
-- GET /api/peliculas; POST /api/peliculas; DELETE /api/peliculas; PUT /api/peliculas
 
-- GET /api/clientes; POST /api/clientes; DELETE /api/clientes; PUT /api/clientes
+- _**GET** /api/peliculas; **POST** /api/peliculas; **DELETE** /api/peliculas; **PUT** /api/peliculas_
 
-- GET /api/alquileres; POST /api/alquileres; DELETE /api/alquileres; PUT /api/alquileres
+- _**GET** /api/clientes; **POST** /api/clientes; **DELETE** /api/clientes; **PUT** /api/clientes_
+
+- _**GET** /api/alquileres; **POST** /api/alquileres; **DELETE** /api/alquileres; **PUT** /api/alquileres_
 
 Verifica que puedes crear, editar y eliminar registros desde la interfaz.
 
