@@ -1,0 +1,11 @@
+[{"id":1, "titulo":"Matrix", "genero":"Ciencia Ficci\u00f3n", "anio":1999, "disponible":1},
+ {"id":4, "titulo":"Salvar al Soldado Ryan", "genero":"Acci\u00f3n B\u00e9lica", "anio":1998, "disponible":0},
+ {"id":6, "titulo":"Civil War", "genero":"Drama-B\u00e9lico", "anio":2024, "disponible":1},
+ {"id":7, "titulo":"Dolor y Gloria", "genero":"Drama", "anio":2019, "disponible":1},
+ {"id":8, "titulo":"Avatar", "genero":"Ciencia Ficci\u00f3n", "anio":2009, "disponible":1},
+ {"id":9, "titulo":"El Cazador de Sue\u00f1os", "genero":"Terror-Ficci\u00f3n", "anio":2003, "disponible":1},
+ {"id":10, "titulo":"La Liga de Los Hombres Extraordinarios", "genero":"Aventura", "anio":2003, "disponible":1},
+ {"id":12, "titulo":"El Diario de Noa", "genero":"Drama-Rom\u00e1ntico", "anio":2004, "disponible":0},
+ {"id":13, "titulo":"El Fuego de la Venganza", "genero":"Acci\u00f3n", "anio":2004, "disponible":0},
+ {"id":14, "titulo":"Zodiac", "genero":"Thriller", "anio":2007, "disponible":1},
+ {"id":16, "titulo":"Esp\u00edas", "genero":"Comedia-Acci\u00f3n", "anio":2015, "disponible":1}]
