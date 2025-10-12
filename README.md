@@ -101,6 +101,7 @@ Pantalla	Descripción
 
 - 🛒 Alquileres: `http://localhost:8100/alquileres-list` 	-- Asignación de películas a clientes, con fechas y precio automático
 
+### El POST en la aplicación se realiza pulsando el + en la esquina superior derecha (Círculo amarillo). El PUT y el DELETE están en la misma línea del registro.
 
 ---
 
