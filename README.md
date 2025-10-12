@@ -44,6 +44,7 @@ Antes de comenzar, asegúrate de tener instalado:
 
 > El backend se ejecutará en http://localhost:8080
 
+_El Backend arranca con el archivo index.js_ `node index.js`
 
 ### 3️⃣ Configurar el frontend
 
