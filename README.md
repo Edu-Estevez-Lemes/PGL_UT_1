@@ -35,7 +35,7 @@ Antes de comenzar, asegúrate de tener instalado:
 ### 2️⃣ Configurar el backend
 
 - 1- Entra en la carpeta /backend,
-- 2- Allí encontrarás el archivo .env.example con las variables de entorno
+- 2- Allí encontrarás el archivo .env.example con las variables de entorno.
 - 3- Instala dependencias y arranca el servidor:
   
     `npm install`
