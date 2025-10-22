@@ -1,5 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define("Pelicula", {
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     titulo: { type: DataTypes.STRING, allowNull: false },
     genero: DataTypes.STRING,
     anio: DataTypes.INTEGER,
@@ -9,3 +10,4 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
 };
+
