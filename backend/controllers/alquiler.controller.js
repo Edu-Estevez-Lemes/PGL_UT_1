@@ -4,58 +4,88 @@ const Cliente = db.clientes;
 const Pelicula = db.peliculas;
 
 // Crear un nuevo alquiler
-exports.create = (req, res) => {
-  if (!req.body.fecha_inicio || !req.body.clienteId || !req.body.peliculaId) {
-    res.status(400).send({ message: "clienteId, peliculaId y fecha_inicio son obligatorios" });
-    return;
-  }
+exports.create = async (req, res) => {
+  try {
+    const { clienteId, peliculaId, fecha_inicio, fecha_fin } = req.body;
 
-  Alquiler.create({
-    fecha_inicio: req.body.fecha_inicio,
-    fecha_fin: req.body.fecha_fin,
-    clienteId: req.body.clienteId,
-    peliculaId: req.body.peliculaId
-  })
-    .then(data => res.send(data))
-    .catch(err => res.status(500).send({ message: err.message }));
+    const nuevo = await Alquiler.create({
+      clienteId,
+      peliculaId,
+      fecha_inicio,
+      fecha_fin
+    });
+
+    res.send(nuevo);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 };
 
-// Obtener todos los alquileres (con cliente y película)
-exports.findAll = (req, res) => {
-  Alquiler.findAll({ include: [Cliente, Pelicula] })
-    .then(data => res.send(data))
-    .catch(err => res.status(500).send({ message: err.message }));
+// Obtener todos los alquileres con cliente y película (e imágenes)
+exports.findAll = async (req, res) => {
+  try {
+    const data = await Alquiler.findAll({
+      include: [
+        {
+          model: Cliente,
+          attributes: ["id", "nombre", "email", "telefono", "imagen"]
+        },
+        {
+          model: Pelicula,
+          attributes: ["id", "titulo", "genero", "anio", "imagen"]
+        }
+      ]
+    });
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 };
 
 // Obtener un alquiler por ID
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
   const id = req.params.id;
-  Alquiler.findByPk(id, { include: [Cliente, Pelicula] })
-    .then(data => {
-      if (data) res.send(data);
-      else res.status(404).send({ message: `No existe alquiler con id=${id}` });
-    })
-    .catch(err => res.status(500).send({ message: err.message }));
+  try {
+    const data = await Alquiler.findByPk(id, {
+      include: [
+        {
+          model: Cliente,
+          attributes: ["id", "nombre", "email", "telefono", "imagen"]
+        },
+        {
+          model: Pelicula,
+          attributes: ["id", "titulo", "genero", "anio", "imagen"]
+        }
+      ]
+    });
+
+    if (data) res.send(data);
+    else res.status(404).send({ message: `No existe alquiler con id=${id}` });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 };
 
 // Actualizar alquiler
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   const id = req.params.id;
-  Alquiler.update(req.body, { where: { id: id } })
-    .then(num => {
-      if (num == 1) res.send({ message: "Alquiler actualizado" });
-      else res.send({ message: `No se pudo actualizar el alquiler con id=${id}` });
-    })
-    .catch(err => res.status(500).send({ message: err.message }));
+  try {
+    const [num] = await Alquiler.update(req.body, { where: { id } });
+    if (num === 1) res.send({ message: "Alquiler actualizado correctamente" });
+    else res.send({ message: `No se pudo actualizar el alquiler con id=${id}` });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 };
 
 // Eliminar alquiler
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
   const id = req.params.id;
-  Alquiler.destroy({ where: { id: id } })
-    .then(num => {
-      if (num == 1) res.send({ message: "Alquiler eliminado" });
-      else res.send({ message: `No se pudo eliminar el alquiler con id=${id}` });
-    })
-    .catch(err => res.status(500).send({ message: err.message }));
+  try {
+    const num = await Alquiler.destroy({ where: { id } });
+    if (num === 1) res.send({ message: "Alquiler eliminado correctamente" });
+    else res.send({ message: `No se pudo eliminar el alquiler con id=${id}` });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 };

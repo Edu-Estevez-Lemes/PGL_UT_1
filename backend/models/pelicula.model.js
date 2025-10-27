@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     titulo: { type: DataTypes.STRING, allowNull: false },
     genero: DataTypes.STRING,
     anio: DataTypes.INTEGER,
+    imagen: { type: DataTypes.STRING },
     disponible: { type: DataTypes.BOOLEAN, defaultValue: true }
   }, {
     tableName: "peliculas",

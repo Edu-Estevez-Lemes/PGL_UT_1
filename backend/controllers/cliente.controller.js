@@ -3,15 +3,21 @@ const Cliente = db.clientes;
 
 // Crear un nuevo cliente
 exports.create = (req, res) => {
-  if (!req.body.nombre || !req.body.email) {
-    res.status(400).send({ message: "Nombre y email son obligatorios" });
+  if (!req.body.nombre) {
+    res.status(400).send({ message: "El nombre es obligatorio" });
     return;
   }
 
+  // Si se subió imagen, guardamos el nombre del archivo
+  const imagen = req.file ? req.file.filename : null;
+
   Cliente.create({
     nombre: req.body.nombre,
+    apellido: req.body.apellido,
     email: req.body.email,
-    telefono: req.body.telefono
+    telefono: req.body.telefono,
+    direccion: req.body.direccion,
+    imagen: imagen
   })
     .then(data => res.send(data))
     .catch(err => res.status(500).send({ message: err.message }));
@@ -35,10 +41,22 @@ exports.findOne = (req, res) => {
     .catch(err => res.status(500).send({ message: err.message }));
 };
 
-// Actualizar un cliente
+// Actualizar cliente
 exports.update = (req, res) => {
   const id = req.params.id;
-  Cliente.update(req.body, { where: { id: id } })
+  const nuevaImagen = req.file ? req.file.filename : undefined;
+
+  const datosActualizados = {
+    nombre: req.body.nombre,
+    apellido: req.body.apellido,
+    email: req.body.email,
+    telefono: req.body.telefono,
+    direccion: req.body.direccion
+  };
+
+  if (nuevaImagen) datosActualizados.imagen = nuevaImagen;
+
+  Cliente.update(datosActualizados, { where: { id: id } })
     .then(num => {
       if (num == 1) res.send({ message: "Cliente actualizado" });
       else res.send({ message: `No se pudo actualizar el cliente con id=${id}` });
@@ -46,7 +64,7 @@ exports.update = (req, res) => {
     .catch(err => res.status(500).send({ message: err.message }));
 };
 
-// Eliminar un cliente
+// Eliminar cliente
 exports.delete = (req, res) => {
   const id = req.params.id;
   Cliente.destroy({ where: { id: id } })
@@ -56,4 +74,3 @@ exports.delete = (req, res) => {
     })
     .catch(err => res.status(500).send({ message: err.message }));
 };
-

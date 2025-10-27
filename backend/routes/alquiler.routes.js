@@ -1,6 +1,7 @@
 module.exports = app => {
   const alquileres = require("../controllers/alquiler.controller.js");
   const router = require("express").Router();
+  const upload = require ("../middlewares/upload");
 
   // Crear alquiler
   router.post("/", alquileres.create);

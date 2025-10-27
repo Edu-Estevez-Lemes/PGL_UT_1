@@ -3,6 +3,7 @@ const express = require("express");
 const db = require("./models");
 const cors = require("cors");
 const { config } = require('dotenv');
+const path = require('path');
 
 const app = express();
 
@@ -10,6 +11,8 @@ app.use(cors({ origin: "http://localhost:8100" }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+
 
 // Sincronización con la BBDD
 db.sequelize.sync().then(() => {

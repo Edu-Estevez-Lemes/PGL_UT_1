@@ -8,11 +8,15 @@ exports.create = (req, res) => {
     return;
   }
 
+  // Si se subió imagen, guardamos el nombre del archivo
+  const imagen = req.file ? req.file.filename : null;
+
   Pelicula.create({
     titulo: req.body.titulo,
     genero: req.body.genero,
     anio: req.body.anio,
-    disponible: req.body.disponible ?? true
+    disponible: req.body.disponible ?? true,
+    imagen: imagen
   })
     .then(data => res.send(data))
     .catch(err => res.status(500).send({ message: err.message }));
@@ -39,7 +43,18 @@ exports.findOne = (req, res) => {
 // Actualizar película
 exports.update = (req, res) => {
   const id = req.params.id;
-  Pelicula.update(req.body, { where: { id: id } })
+  const nuevaImagen = req.file ? req.file.filename : undefined;
+
+  const datosActualizados = {
+    titulo: req.body.titulo,
+    genero: req.body.genero,
+    anio: req.body.anio,
+    disponible: req.body.disponible
+  };
+
+  if (nuevaImagen) datosActualizados.imagen = nuevaImagen;
+
+  Pelicula.update(datosActualizados, { where: { id: id } })
     .then(num => {
       if (num == 1) res.send({ message: "Película actualizada" });
       else res.send({ message: `No se pudo actualizar la película con id=${id}` });
