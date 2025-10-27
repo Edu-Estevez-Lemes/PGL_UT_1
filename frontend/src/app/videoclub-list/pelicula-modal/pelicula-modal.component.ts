@@ -1,26 +1,47 @@
 import { Component, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { Pelicula } from '../../pelicula-service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, ModalController } from '@ionic/angular';
+
+import { PhotoService } from '../../photo.service';        // ✔ en app/
+import { Pelicula } from '../../pelicula-service';         // ✔ en app/
 
 @Component({
   selector: 'app-pelicula-modal',
+  standalone: true,
+  imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: './pelicula-modal.component.html',
-  styleUrls: ['./pelicula-modal.component.scss'],
-  standalone: false,
+  styleUrls: ['./pelicula-modal.component.scss']
 })
 export class PeliculaModalComponent {
-  @Input() pelicula!: Pelicula;              // objeto a editar o base para crear
-  @Input() modo!: 'crear' | 'editar';        // texto del botón y título
+  @Input() pelicula!: Pelicula;
+  @Input() modo!: 'crear' | 'editar';
 
-  constructor(private modalCtrl: ModalController) {}
+  imagenBlob: Blob | null = null;
+  imagenPreview: string | null = null;
+
+  constructor(
+    private modalCtrl: ModalController,
+    private photo: PhotoService
+  ) {}
 
   cerrar() {
     this.modalCtrl.dismiss(null, 'cancel');
   }
 
+  async takePhoto() {
+    this.imagenBlob = await this.photo.takePhoto();
+    this.imagenPreview = URL.createObjectURL(this.imagenBlob);
+  }
+
+  async pickImage() {
+    this.imagenBlob = await this.photo.pickImage();
+    this.imagenPreview = URL.createObjectURL(this.imagenBlob);
+  }
+
   guardar() {
-    // Devuelvo la película al padre
-    this.modalCtrl.dismiss(this.pelicula, 'ok');
+    this.modalCtrl.dismiss({ pelicula: this.pelicula, imagenBlob: this.imagenBlob }, 'ok');
   }
 }
+
 

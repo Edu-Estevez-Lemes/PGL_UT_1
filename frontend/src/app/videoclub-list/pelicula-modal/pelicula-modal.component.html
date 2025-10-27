@@ -1,9 +1,6 @@
-<!-- Header del modal con toolbar oscuro -->
 <ion-header translucent>
   <ion-toolbar color="dark">
-    <ion-title>
-      {{ modo === 'crear' ? 'Añadir Película' : 'Editar Película' }}
-    </ion-title>
+    <ion-title>{{ modo === 'crear' ? 'Añadir Película' : 'Editar Película' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cerrar()">Cerrar</ion-button>
     </ion-buttons>
@@ -26,8 +23,16 @@
     <ion-input type="number" [(ngModel)]="pelicula.anio"></ion-input>
   </ion-item>
 
-  <ion-button expand="block" color="warning" (click)="guardar()">
-    {{ modo === 'crear' ? 'Guardar' : 'Actualizar' }}
-  </ion-button>
+  <div class="ion-text-center" style="margin: 1em 0;">
+    <ion-button color="warning" (click)="takePhoto()">📷 Cámara</ion-button>
+    <ion-button color="medium" (click)="pickImage()">🖼 Galería</ion-button>
+  </div>
+
+  <div *ngIf="imagenPreview" class="ion-text-center">
+    <img [src]="imagenPreview" style="max-width: 200px; border-radius: 10px;">
+  </div>
+
+  <ion-button expand="block" color="warning" (click)="guardar()">Guardar</ion-button>
 </ion-content>
+
 

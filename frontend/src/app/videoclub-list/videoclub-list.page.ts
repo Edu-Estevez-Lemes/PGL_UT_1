@@ -16,6 +16,9 @@ export class VideoclubListPage implements OnInit {
   cargando = false;
   error?: string;
 
+  // Base URL de imágenes del backend
+  readonly IMG_BASE = 'http://localhost:8080/images/';
+
   constructor(
     private peliculasApi: PeliculaService,
     private modalCtrl: ModalController,
@@ -30,11 +33,14 @@ export class VideoclubListPage implements OnInit {
   private cargarPeliculas(): void {
     this.cargando = true;
     this.peliculasApi.getAll().subscribe({
-      next: (rows) => { this.peliculas = rows; this.cargando = false; },
+      next: (rows) => {
+        this.peliculas = rows;
+        this.cargando = false;
+      },
       error: (e) => {
         this.error = (e as any)?.error?.message ?? 'Error cargando películas';
         this.cargando = false;
-      }
+      },
     });
   }
 
@@ -44,14 +50,36 @@ export class VideoclubListPage implements OnInit {
       component: PeliculaModalComponent,
       componentProps: {
         pelicula: { titulo: '', genero: '', anio: new Date().getFullYear() } as Pelicula,
-        modo: 'crear'
-      }
+        modo: 'crear',
+      },
     });
     await modal.present();
 
     const { data, role } = await modal.onWillDismiss();
-    if (role === 'ok' && data) {
-      this.peliculasApi.create(data).subscribe(() => this.cargarPeliculas());
+    if (role === 'ok' && data?.pelicula) {
+      const formData = new FormData();
+      formData.append('titulo', data.pelicula.titulo || '');
+      formData.append('genero', data.pelicula.genero || '');
+      formData.append('anio', data.pelicula.anio?.toString() || '');
+
+      if (data.imagenBlob) {
+        const fecha = new Date();
+        const nombreArchivo = `poster_${fecha.getFullYear()}${(fecha.getMonth() + 1)
+          .toString()
+          .padStart(2, '0')}${fecha.getDate().toString().padStart(2, '0')}_${fecha
+          .getHours()
+          .toString()
+          .padStart(2, '0')}${fecha.getMinutes().toString().padStart(2, '0')}${fecha
+          .getSeconds()
+          .toString()
+          .padStart(2, '0')}.jpg`;
+        formData.append('file', data.imagenBlob, nombreArchivo);
+      }
+
+      this.peliculasApi.create(formData).subscribe({
+        next: () => this.cargarPeliculas(),
+        error: (err) => console.error('❌ Error al crear película:', err),
+      });
     }
   }
 
@@ -61,14 +89,36 @@ export class VideoclubListPage implements OnInit {
       component: PeliculaModalComponent,
       componentProps: {
         pelicula: { ...p },
-        modo: 'editar'
-      }
+        modo: 'editar',
+      },
     });
     await modal.present();
 
     const { data, role } = await modal.onWillDismiss();
-    if (role === 'ok' && data) {
-      this.peliculasApi.update(p.id!, data).subscribe(() => this.cargarPeliculas());
+    if (role === 'ok' && data?.pelicula) {
+      const formData = new FormData();
+      formData.append('titulo', data.pelicula.titulo || '');
+      formData.append('genero', data.pelicula.genero || '');
+      formData.append('anio', data.pelicula.anio?.toString() || '');
+
+      if (data.imagenBlob) {
+        const fecha = new Date();
+        const nombreArchivo = `poster_${fecha.getFullYear()}${(fecha.getMonth() + 1)
+          .toString()
+          .padStart(2, '0')}${fecha.getDate().toString().padStart(2, '0')}_${fecha
+          .getHours()
+          .toString()
+          .padStart(2, '0')}${fecha.getMinutes().toString().padStart(2, '0')}${fecha
+          .getSeconds()
+          .toString()
+          .padStart(2, '0')}.jpg`;
+        formData.append('file', data.imagenBlob, nombreArchivo);
+      }
+
+      this.peliculasApi.update(p.id!, formData).subscribe({
+        next: () => this.cargarPeliculas(),
+        error: (err) => console.error('❌ Error al actualizar película:', err),
+      });
     }
   }
 
@@ -83,11 +133,15 @@ export class VideoclubListPage implements OnInit {
           text: 'Eliminar',
           role: 'ok',
           handler: () => {
-            this.peliculasApi.delete(p.id!).subscribe(() => this.cargarPeliculas());
-          }
-        }
-      ]
+            this.peliculasApi.delete(p.id!).subscribe({
+              next: () => this.cargarPeliculas(),
+              error: (err) => console.error('❌ Error al eliminar película:', err),
+            });
+          },
+        },
+      ],
     });
     await alert.present();
   }
 }
+

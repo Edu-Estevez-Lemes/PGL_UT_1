@@ -7,6 +7,7 @@ export interface Cliente {
   nombre: string;
   email: string;
   telefono: string;
+  imagen?: string;   // ✅ Añadido: la imagen del cliente
 }
 
 @Injectable({ providedIn: 'root' })
@@ -19,11 +20,11 @@ export class ClienteService {
     return this.http.get<Cliente[]>(this.apiUrl);
   }
 
-  create(cliente: Cliente): Observable<Cliente> {
+  create(cliente: any): Observable<Cliente> {
     return this.http.post<Cliente>(this.apiUrl, cliente);
   }
 
-  update(id: number, cliente: Cliente): Observable<Cliente> {
+  update(id: number, cliente: any): Observable<Cliente> {
     return this.http.put<Cliente>(`${this.apiUrl}/${id}`, cliente);
   }
 
@@ -31,5 +32,3 @@ export class ClienteService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
-
-

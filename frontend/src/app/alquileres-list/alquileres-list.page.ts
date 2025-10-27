@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
-import { AlquilerService, Alquiler } from '../alquiler-service';
+import { AlquilerService } from '../alquiler-service';
 import { AlquilerModalComponent } from './alquiler-modal/alquiler-modal.component';
 
 @Component({
@@ -10,13 +10,14 @@ import { AlquilerModalComponent } from './alquiler-modal/alquiler-modal.componen
   standalone: false,
 })
 export class AlquileresListPage implements OnInit {
-
-  alquileres: Alquiler[] = [];
+  alquileres: any[] = [];           // <- any para no chocar con tipos 'imagen'
   cargando = false;
   error?: string;
 
+  readonly IMG_BASE = 'http://localhost:8080/images/';
+
   constructor(
-    private alquileresApi: AlquilerService,
+    private alquilerSrv: AlquilerService,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController
   ) {}
@@ -27,9 +28,12 @@ export class AlquileresListPage implements OnInit {
 
   private cargarAlquileres(): void {
     this.cargando = true;
-    this.alquileresApi.getAll().subscribe({
-      next: rows => { this.alquileres = rows; this.cargando = false; },
-      error: e => {
+    this.alquilerSrv.getAll().subscribe({
+      next: (rows: any[]) => {        // esperamos include de Cliente y Pelicula
+        this.alquileres = rows ?? [];
+        this.cargando = false;
+      },
+      error: (e) => {
         this.error = (e as any)?.error?.message ?? 'Error cargando alquileres';
         this.cargando = false;
       }
@@ -38,58 +42,56 @@ export class AlquileresListPage implements OnInit {
 
   // ───────── Añadir ─────────
   async nuevoAlquiler() {
-    const nuevo: Alquiler = {
-      clienteId: null,
-      peliculaId: null,
-      fecha_inicio: new Date().toISOString(),
-      fecha_fin: null,
-      precio: 0
-    };
-
     const modal = await this.modalCtrl.create({
       component: AlquilerModalComponent,
-      componentProps: { alquiler: nuevo, modo: 'crear' }
+      componentProps: {
+        alquiler: {
+          clienteId: null,
+          peliculaId: null,
+          fecha_inicio: '',
+          fecha_fin: ''
+        },
+        modo: 'crear',
+      },
     });
     await modal.present();
 
     const { data, role } = await modal.onWillDismiss();
     if (role === 'ok' && data) {
-      this.alquileresApi.create(data).subscribe(() => this.cargarAlquileres());
+      this.alquilerSrv.create(data).subscribe(() => this.cargarAlquileres());
     }
   }
 
   // ───────── Editar ─────────
-  async editarAlquiler(a: Alquiler) {
+  async editarAlquiler(a: any) {
     const modal = await this.modalCtrl.create({
       component: AlquilerModalComponent,
-      componentProps: { alquiler: { ...a }, modo: 'editar' }
+      componentProps: { alquiler: { ...a }, modo: 'editar' },
     });
     await modal.present();
 
     const { data, role } = await modal.onWillDismiss();
     if (role === 'ok' && data) {
-      this.alquileresApi.update(a.id!, data).subscribe(() => this.cargarAlquileres());
+      this.alquilerSrv.update(a.id!, data).subscribe(() => this.cargarAlquileres());
     }
   }
 
   // ───────── Eliminar ─────────
-  async eliminarAlquiler(a: Alquiler) {
+  async eliminarAlquiler(a: any) {
     const alert = await this.alertCtrl.create({
       header: 'Confirmar eliminación',
-      message: `¿Seguro que quieres eliminar el alquiler de <strong>${a.Cliente?.nombre ?? 'Cliente'}</strong> para <strong>${a.Pelicula?.titulo ?? 'Película'}</strong>?`,
+      message: `¿Seguro que quieres eliminar el alquiler de <b>${a?.Cliente?.nombre ?? 'cliente'}</b>?`,
       buttons: [
         { text: 'Cancelar', role: 'cancel' },
         {
           text: 'Eliminar',
           role: 'ok',
           handler: () => {
-            this.alquileresApi.delete(a.id!).subscribe(() => this.cargarAlquileres());
-          }
-        }
-      ]
+            this.alquilerSrv.delete(a.id!).subscribe(() => this.cargarAlquileres());
+          },
+        },
+      ],
     });
     await alert.present();
   }
 }
-
-

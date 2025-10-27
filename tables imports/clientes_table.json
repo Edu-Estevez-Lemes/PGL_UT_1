@@ -1,8 +1,0 @@
-[{"id":1, "nombre":"Juan P\u00e9rez", "email":"jperez88@example.com", "telefono":"600111222"},
- {"id":3, "nombre":"Vanessa Enr\u00edquez", "email":"vanessae@myemail.com", "telefono":"600555666"},
- {"id":7, "nombre":"Marcos Alm\u00edrez", "email":"marcosalmirez92@myemail.com", "telefono":"688100200"},
- {"id":8, "nombre":"Marta S\u00e1nchez", "email":"msanchez@myemail.com", "telefono":"654987123"},
- {"id":9, "nombre":"Ver\u00f3nica Mart\u00edn", "email":"veromartin@myemail.es", "telefono":"654878621"},
- {"id":10, "nombre":"Keyla Morales", "email":"km86@example.com", "telefono":"633211477"},
- {"id":11, "nombre":"Marcos Santos", "email":"marsan@emailexample.com", "telefono":"685214359"},
- {"id":13, "nombre":"Francisco Alm\u00edrez", "email":"falmirezxtra@myemail.com", "telefono":"665214786"}]

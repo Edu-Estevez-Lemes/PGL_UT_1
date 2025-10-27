@@ -9,19 +9,22 @@ import { ClienteModalComponent } from './cliente-modal/cliente-modal.component';
   selector: 'app-clientes-list',
   templateUrl: './clientes-list.page.html',
   styleUrls: ['./clientes-list.page.scss'],
-  standalone: false, // 👈 igual que en películas
+  standalone: false,
 })
 export class ClientesListPage implements OnInit {
   clientes: Cliente[] = [];
   cargando = false;
   error?: string;
 
+  // Base de imágenes
+  readonly IMG_BASE = 'http://localhost:8080/images/';
+
   constructor(
     private clientesApi: ClienteService,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.cargarClientes();
@@ -41,7 +44,7 @@ export class ClientesListPage implements OnInit {
     });
   }
 
-  // ───────── Añadir ─────────
+  // ───────── Añadir cliente ─────────
   async nuevoCliente() {
     const modal = await this.modalCtrl.create({
       component: ClienteModalComponent,
@@ -53,12 +56,34 @@ export class ClientesListPage implements OnInit {
     await modal.present();
 
     const { data, role } = await modal.onWillDismiss();
-    if (role === 'ok' && data) {
-      this.clientesApi.create(data).subscribe(() => this.cargarClientes());
+    if (role === 'ok' && data?.cliente) {
+      const formData: any = new FormData();
+      formData.append('nombre', data.cliente.nombre || '');
+      formData.append('email', data.cliente.email || '');
+      formData.append('telefono', data.cliente.telefono || '');
+
+      if (data.imagenBlob) {
+        const fecha = new Date();
+        const nombreArchivo = `cliente_${fecha.getFullYear()}${(fecha.getMonth() + 1)
+          .toString()
+          .padStart(2, '0')}${fecha.getDate().toString().padStart(2, '0')}_${fecha
+          .getHours()
+          .toString()
+          .padStart(2, '0')}${fecha.getMinutes().toString().padStart(2, '0')}${fecha
+          .getSeconds()
+          .toString()
+          .padStart(2, '0')}.jpg`;
+        formData.append('file', data.imagenBlob, nombreArchivo);
+      }
+
+      this.clientesApi.create(formData).subscribe({
+        next: () => this.cargarClientes(),
+        error: (err) => console.error('❌ Error al crear cliente:', err),
+      });
     }
   }
 
-  // ───────── Editar ─────────
+  // ───────── Editar cliente ─────────
   async editarCliente(c: Cliente) {
     const modal = await this.modalCtrl.create({
       component: ClienteModalComponent,
@@ -70,12 +95,34 @@ export class ClientesListPage implements OnInit {
     await modal.present();
 
     const { data, role } = await modal.onWillDismiss();
-    if (role === 'ok' && data) {
-      this.clientesApi.update(c.id!, data).subscribe(() => this.cargarClientes());
+    if (role === 'ok' && data?.cliente) {
+      const formData: any = new FormData();
+      formData.append('nombre', data.cliente.nombre || '');
+      formData.append('email', data.cliente.email || '');
+      formData.append('telefono', data.cliente.telefono || '');
+
+      if (data.imagenBlob) {
+        const fecha = new Date();
+        const nombreArchivo = `cliente_${fecha.getFullYear()}${(fecha.getMonth() + 1)
+          .toString()
+          .padStart(2, '0')}${fecha.getDate().toString().padStart(2, '0')}_${fecha
+          .getHours()
+          .toString()
+          .padStart(2, '0')}${fecha.getMinutes().toString().padStart(2, '0')}${fecha
+          .getSeconds()
+          .toString()
+          .padStart(2, '0')}.jpg`;
+        formData.append('file', data.imagenBlob, nombreArchivo);
+      }
+
+      this.clientesApi.update(c.id!, formData).subscribe({
+        next: () => this.cargarClientes(),
+        error: (err) => console.error('❌ Error al actualizar cliente:', err),
+      });
     }
   }
 
-  // ───────── Eliminar ─────────
+  // ───────── Eliminar cliente ─────────
   async eliminarCliente(c: Cliente) {
     const alert = await this.alertCtrl.create({
       header: 'Confirmar eliminación',
@@ -86,7 +133,10 @@ export class ClientesListPage implements OnInit {
           text: 'Eliminar',
           role: 'ok',
           handler: () => {
-            this.clientesApi.delete(c.id!).subscribe(() => this.cargarClientes());
+            this.clientesApi.delete(c.id!).subscribe({
+              next: () => this.cargarClientes(),
+              error: (err) => console.error('❌ Error al eliminar cliente:', err),
+            });
           },
         },
       ],
@@ -94,5 +144,6 @@ export class ClientesListPage implements OnInit {
     await alert.present();
   }
 }
+
 
 

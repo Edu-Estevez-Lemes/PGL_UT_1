@@ -2,9 +2,12 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
+
+import { lastValueFrom } from 'rxjs';
+
+import { ClienteService, Cliente } from '../../cliente-service';
+import { PeliculaService, Pelicula } from '../../pelicula-service';
 import { Alquiler } from '../../alquiler-service';
-import { PeliculaService } from '../../pelicula-service';
-import { ClienteService } from '../../cliente-service';
 
 @Component({
   selector: 'app-alquiler-modal',
@@ -14,21 +17,37 @@ import { ClienteService } from '../../cliente-service';
   styleUrls: ['./alquiler-modal.component.scss']
 })
 export class AlquilerModalComponent {
-  @Input() alquiler!: Alquiler;
   @Input() modo!: 'crear' | 'editar';
+  @Input() alquiler!: Partial<Alquiler>;
 
-  peliculas: any[] = [];
-  clientes: any[] = [];
+  clientes: Cliente[] = [];
+  peliculas: Pelicula[] = [];
 
   constructor(
     private modalCtrl: ModalController,
-    private peliculasApi: PeliculaService,
-    private clientesApi: ClienteService
-  ) {}
+    private clientesSrv: ClienteService,
+    private peliculasSrv: PeliculaService
+  ) {
+    // inicializa si no viene nada
+    if (!this.alquiler) {
+      this.alquiler = { clienteId: null, peliculaId: null, fecha_inicio: '', fecha_fin: '' };
+    }
+  }
 
-  ngOnInit() {
-    this.peliculasApi.getAll().subscribe({ next: d => this.peliculas = d });
-    this.clientesApi.getAll().subscribe({ next: d => this.clientes = d });
+  // usa ionViewWillEnter para que se ejecute cada vez que se abra el modal
+  async ionViewWillEnter() {
+    try {
+      // <- aquí está la corrección: usamos lastValueFrom, no toPromise()
+      this.clientes = await lastValueFrom(this.clientesSrv.getAll());
+      this.peliculas = await lastValueFrom(this.peliculasSrv.getAll());
+
+      // si vienes en modo "crear" asegúrate de tener campos inicializados
+      if (!this.alquiler.fecha_inicio) this.alquiler.fecha_inicio = '';
+      if (!this.alquiler.fecha_fin)    this.alquiler.fecha_fin = '';
+    } catch (err) {
+      console.error('Error cargando clientes/películas:', err);
+      // opcional: podrías mostrar un alert si quieres notificar al usuario
+    }
   }
 
   cerrar() {
@@ -36,19 +55,27 @@ export class AlquilerModalComponent {
   }
 
   guardar() {
-    this.modalCtrl.dismiss(this.alquiler, 'ok');
-  }
-
-  calcularPrecio() {
-    if (!this.alquiler.fecha_inicio || !this.alquiler.fecha_fin) {
-      this.alquiler.precio = 0;
+    if (!this.alquiler.clienteId || !this.alquiler.peliculaId ||
+        !this.alquiler.fecha_inicio || !this.alquiler.fecha_fin) {
+      console.warn('Todos los campos son obligatorios');
       return;
     }
-    const inicio = new Date(this.alquiler.fecha_inicio);
-    const fin = new Date(this.alquiler.fecha_fin);
-    const dias = Math.max(Math.ceil((fin.getTime() - inicio.getTime()) / (1000 * 60 * 60 * 24)), 0);
-    const extras = dias > 3 ? dias - 3 : 0;
-    this.alquiler.precio = 5 + extras * 1.5;
+
+    const payload: Alquiler = {
+      clienteId: this.alquiler.clienteId!,
+      peliculaId: this.alquiler.peliculaId!,
+      fecha_inicio: this.alquiler.fecha_inicio!,
+      fecha_fin: this.alquiler.fecha_fin!
+    } as Alquiler;
+
+    // el padre (alquileres-list) hace la llamada HTTP; aquí devolvemos el objeto
+    this.modalCtrl.dismiss(payload, 'ok');
   }
 }
+
+
+
+
+
+
 

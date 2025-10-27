@@ -26,11 +26,15 @@
 
   <ion-list *ngIf="!cargando && !error" inset>
     <ion-item *ngFor="let p of peliculas" lines="none" class="pelicula-item">
-      <ion-icon name="film-outline" slot="start" color="warning"></ion-icon>
+      <div class="poster-container" slot="start">
+        <img *ngIf="p.imagen; else noPoster" [src]="IMG_BASE + p.imagen" alt="Póster de {{ p.titulo }}">
+      </div>
+
       <ion-label>
         <h2>{{ p.titulo }}</h2>
         <p>{{ p.genero || '—' }} · {{ p.anio || 's/d' }}</p>
       </ion-label>
+
       <ion-buttons slot="end">
         <ion-button fill="clear" color="warning" (click)="editarPelicula(p)">
           <ion-icon name="create-outline"></ion-icon>
@@ -41,4 +45,8 @@
       </ion-buttons>
     </ion-item>
   </ion-list>
+
+  <ng-template #noPoster>
+    <ion-icon name="film-outline" size="large" color="warning"></ion-icon>
+  </ng-template>
 </ion-content>

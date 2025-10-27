@@ -2,8 +2,7 @@
 ion-toolbar { --background: #111; }
 
 .home-btn ion-icon { color: #f2c94c; font-size: 22px; }
-
-.add-btn ion-icon {
+.add-btn ion-icon  {
   color: #000; background: #f2c94c; border-radius: 50%;
   padding: 6px; font-size: 20px; box-shadow: 0 0 10px rgba(242,201,76,.5);
 }
@@ -16,13 +15,57 @@ ion-list { background: transparent; }
   margin-bottom: .5rem;
   transition: all .2s ease;
   padding-inline-start: 8px;
+  align-items: center;
 
   &:hover {
     box-shadow: 0 0 10px rgba(242,201,76,.25);
     transform: translateY(-2px);
   }
 
-  ion-icon[slot="start"] { color: #f2c94c; font-size: 22px; }
-  ion-label h2 { color: #fff; font-weight: 600; }
-  ion-label p  { color: #f2c94c; margin: 0; }
+  .cliente-avatar {
+    width: 52px; height: 52px;
+    border: 2px solid #f2c94c;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+
+    &.nofoto {
+      display: grid; place-items: center;
+      background: #111;
+    }
+
+    ion-icon { font-size: 24px; }
+    img { width: 100%; height: 100%; object-fit: cover; }
+  }
+
+  ion-label {
+    h2 { color: #fff; font-weight: 600; margin: 0 0 2px; }
+    p  { color: #f2c94c; margin: 0; font-size: .92rem; }
+  }
+
+  .poster-wrap {
+    width: 48px; height: 70px;   /* mini-póster vertical */
+    border: 2px solid #f2c94c;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    margin-left: 8px;
+
+    &.nofoto { background: #111; }
+    ion-icon { font-size: 26px; }
+
+    .poster {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+  }
+
+  .actions {
+    margin-left: 6px;
+
+    ion-button {
+      --padding-start: 6px; --padding-end: 6px;
+      --ripple-color: rgba(242,201,76,.35);
+    }
+  }
 }

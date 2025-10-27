@@ -1,24 +1,19 @@
 .page-bg {
   --background: #000;
   color: #fff;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
 }
 
-ion-header, ion-toolbar {
+ion-toolbar {
   --background: #111;
   color: #fff;
 }
 
-ion-title {
-  color: #fff;
-  font-weight: 600;
-}
-
-/* Campos */
-.custom-item {
+ion-item {
   --background: #111;
-  border-radius: 12px;
-  margin-bottom: 14px;
+  color: #fff;
+  margin-bottom: 12px;
+  border-radius: 10px;
   --highlight-color-focused: #f2c94c;
 }
 
@@ -26,47 +21,25 @@ ion-label {
   color: #f2c94c !important;
 }
 
-ion-item.item-has-focus ion-label,
-ion-item.item-has-value ion-label {
-  color: #f2c94c !important;
-}
-
-ion-input, ion-select, ion-datetime {
-  --color: #fff;
-  --placeholder-color: #f2c94c;
-  --placeholder-opacity: 1;
-}
-
-/* Tarjeta de precio */
-.price-card {
-  background: #1a1a1a;
-  border: 2px solid #f2c94c;
-  border-radius: 16px;
-  text-align: center;
-  margin-top: 12px;
-  font-size: 1.4rem;
-  color: #f2c94c;
-  box-shadow: 0 0 10px rgba(242, 201, 76, 0.4);
-}
-
-/* Botón */
-ion-button {
-  margin-top: 16px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-ion-input[type="date"]::part(native) {
-  background-color: #111;
+ion-datetime {
+  --background: #111;
   color: #fff;
-  border: 1px solid #f2c94c;
-  border-radius: 8px;
-  padding: 6px 10px;
   font-size: 0.95rem;
+  border-radius: 8px;
 }
 
-ion-input[type="date"]:focus::part(native) {
-  outline: none;
-  border-color: #ffd84c;
+/* Compactar tamaño del datetime */
+.custom-datetime {
+  scale: 0.85;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+ion-button {
+  margin-top: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 12px rgba(242, 201, 76, 0.4);
 }
 

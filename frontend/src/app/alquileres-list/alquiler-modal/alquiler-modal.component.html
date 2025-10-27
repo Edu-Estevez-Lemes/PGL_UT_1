@@ -1,7 +1,6 @@
-<!-- Header del modal con toolbar oscuro -->
-<ion-header translucent>
+<ion-header translucent="true">
   <ion-toolbar color="dark">
-    <ion-title>{{ modo === 'crear' ? 'Nuevo Alquiler' : 'Editar Alquiler' }}</ion-title>
+    <ion-title>{{ modo === 'crear' ? 'Añadir Alquiler' : 'Editar Alquiler' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cerrar()">Cerrar</ion-button>
     </ion-buttons>
@@ -11,49 +10,52 @@
 <ion-content class="ion-padding page-bg">
 
   <!-- Cliente -->
-  <ion-item class="custom-item">
+  <ion-item>
     <ion-label position="floating">Cliente</ion-label>
-    <ion-select [(ngModel)]="alquiler.clienteId" interface="popover" placeholder="Seleccionar cliente">
-      <ion-select-option *ngFor="let c of clientes" [value]="c.id">{{ c.nombre }}</ion-select-option>
+    <ion-select [(ngModel)]="alquiler.clienteId" interface="popover">
+      <ion-select-option *ngFor="let c of clientes" [value]="c.id">
+        {{ c.nombre }}
+      </ion-select-option>
     </ion-select>
   </ion-item>
 
   <!-- Película -->
-  <ion-item class="custom-item">
+  <ion-item>
     <ion-label position="floating">Película</ion-label>
-    <ion-select [(ngModel)]="alquiler.peliculaId" interface="popover" placeholder="Seleccionar película">
-      <ion-select-option *ngFor="let p of peliculas" [value]="p.id">{{ p.titulo }}</ion-select-option>
+    <ion-select [(ngModel)]="alquiler.peliculaId" interface="popover">
+      <ion-select-option *ngFor="let p of peliculas" [value]="p.id">
+        {{ p.titulo }}
+      </ion-select-option>
     </ion-select>
   </ion-item>
 
-  <!-- Fechas -->
-<ion-item class="custom-item">
-  <ion-label position="floating">Fecha de inicio</ion-label>
-  <ion-input
-    type="date"
-    [(ngModel)]="alquiler.fecha_inicio"
-    (ionChange)="calcularPrecio()">
-  </ion-input>
-</ion-item>
+  <!-- Fecha inicio -->
+  <ion-item>
+    <ion-label position="floating">Fecha de inicio</ion-label>
+    <ion-datetime
+      presentation="date"
+      displayFormat="DD/MM/YYYY"
+      [(ngModel)]="alquiler.fecha_inicio"
+      color="warning"
+      class="custom-datetime">
+    </ion-datetime>
+  </ion-item>
 
-<ion-item class="custom-item">
-  <ion-label position="floating">Fecha de fin</ion-label>
-  <ion-input
-    type="date"
-    [(ngModel)]="alquiler.fecha_fin"
-    (ionChange)="calcularPrecio()">
-  </ion-input>
-</ion-item>
-
-  <!-- Precio -->
-  <ion-card class="price-card" *ngIf="alquiler.precio">
-    <ion-card-content>
-      💰 <strong>{{ alquiler.precio | currency:'EUR':'symbol':'1.2-2' }}</strong>
-    </ion-card-content>
-  </ion-card>
+  <!-- Fecha fin -->
+  <ion-item>
+    <ion-label position="floating">Fecha de fin</ion-label>
+    <ion-datetime
+      presentation="date"
+      displayFormat="DD/MM/YYYY"
+      [(ngModel)]="alquiler.fecha_fin"
+      color="warning"
+      class="custom-datetime">
+    </ion-datetime>
+  </ion-item>
 
   <ion-button expand="block" color="warning" (click)="guardar()">
-    {{ modo === 'crear' ? 'Guardar' : 'Actualizar' }}
+    {{ modo === 'crear' ? 'GUARDAR' : 'ACTUALIZAR' }}
   </ion-button>
 
 </ion-content>
+
