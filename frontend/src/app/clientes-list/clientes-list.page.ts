@@ -73,7 +73,7 @@ export class ClientesListPage implements OnInit {
           .getSeconds()
           .toString()
           .padStart(2, '0')}.jpg`;
-        formData.append('file', data.imagenBlob, nombreArchivo);
+        formData.append('imagen', data.imagenBlob, nombreArchivo);
       }
 
       this.clientesApi.create(formData).subscribe({
