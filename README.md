@@ -130,11 +130,8 @@ Uso libre para aprendizaje y prácticas personales.
 
 ---
 
-#
-#
-# ------------------------------------------------------------------------------------------------------------------------------------
-#
-#
+
+
 
 # **ENGLISH VERSION**
 
@@ -149,58 +146,57 @@ It allows managing a small video club where you can add, edit, and delete movies
 These instructions will help you get a working copy of the project on your local machine for development and testing purposes.
 The application is composed of two main parts:
 
-**1.** Backend (Express + Sequelize + MySQL)
-**2.** Frontend (Ionic + Angular)
+### **1.** Backend (Express + Sequelize + MySQL)
+### **2.** Frontend (Ionic + Angular)
 
 
 ## 📋 **_Prerequisites_**
 
 Before you begin, make sure you have the following installed:
 
-Node.js 20+: `https://nodejs.org/en/download`
+- Node.js 20+: `https://nodejs.org/en/download`
 
-MySQL 8+: `https://dev.mysql.com/downloads/installer/`
+- MySQL 8+: `https://dev.mysql.com/downloads/installer/`
 
-Ionic CLI: npm install -g @ionic/cli
+- Ionic CLI: npm install -g @ionic/cli
 
-Git: `https://git-scm.com/downloads`
+- Git: `https://git-scm.com/downloads`
 
 ## 🔧 **_Installation_**
 
-1️⃣ Clone the repository
+### 1️⃣ Clone the repository
 git clone `https://github.com/Edu-Estevez-Lemes/PGL_UT_1.git`
 
-2️⃣ Set up the backend
+### 2️⃣ Set up the backend
 
-Navigate to the /backend folder.
+- 1- Navigate to the /backend folder.
 
-There you will find the .env.example file with the environment variables.
+- 2- There you will find the .env.example file with the environment variables.
 
-Install dependencies and start the server:
+- 3- Install dependencies and start the server:
 
-npm install
-npm start
-
-
-The backend will run on `http://localhost:8080`
-
-Backend starts using the file index.js → node index.js
-
-3️⃣ Set up the frontend
-
-Navigate to the /frontend folder.
-
-Install dependencies:
-
-npm install
+`npm install`
+`npm start`
 
 
-Start the development server:
+> The backend will run on `http://localhost:8080`
 
-ionic serve
+_Backend starts using the file index.js_ → `node index.js`
+
+### 3️⃣ Set up the frontend
+
+- 1- Navigate to the /frontend folder.
+
+- 2- Install dependencies:
+
+`npm install`
+
+- 3- Start the development server:
+
+`ionic serve`
 
 
-The app will open at `http://localhost:8100`
+> The app will open at `http://localhost:8100`
 
 ## ⚙️ **_Basic Testing_**
 
@@ -210,13 +206,13 @@ Postman Collection Link:
 
 ### 🎞️ Available Endpoints
 
-**GET** /api/peliculas; **POST** /api/peliculas; **DELETE** /api/peliculas; **PUT** /api/peliculas
+- **GET** /api/peliculas; **POST** /api/peliculas; **DELETE** /api/peliculas; **PUT** /api/peliculas
 
-**GET** /api/clientes; **POST** /api/clientes; **DELETE** /api/clientes; **PUT** /api/clientes
+- **GET** /api/clientes; **POST** /api/clientes; **DELETE** /api/clientes; **PUT** /api/clientes
 
-**GET** /api/alquileres; **POST** /api/alquileres; **DELETE** /api/alquileres; **PUT** /api/alquileres
+- **GET** /api/alquileres; **POST** /api/alquileres; **DELETE** /api/alquileres; **PUT** /api/alquileres
 
-Verify that you can create, edit, and delete records from the interface.
+> Verify that you can create, edit, and delete records from the interface.
 
 ## 🧪 **_Postman Collections_**
 
@@ -226,16 +222,16 @@ Public collections with backend endpoints:
 🎞️ Movies
 🛒 Rentals
 
-💡 All endpoints share the same base API:
+### 💡 All endpoints share the same base API:
 
-`http://localhost:8080/api`
+> `http://localhost:8080/api`
 
 ### 🌐 Application URLs
 Screen	Description
-🏠 Home: `http://localhost:8100/home`	Quick access to Movies, Clients, and Rentals
-🎞️ Movies: `http://localhost:8100/videoclub-list`	Full CRUD management for movies
-👥 Clients: `http://localhost:8100/clientes-list`	Client management section
-🛒 Rentals: `http://localhost:8100/alquileres-list`	Assign movies to clients with dates and automatic pricing
+- 🏠 Home: `http://localhost:8100/home`	Quick access to Movies, Clients, and Rentals
+- 🎞️ Movies: `http://localhost:8100/videoclub-list`	Full CRUD management for movies
+- 👥 Clients: `http://localhost:8100/clientes-list`	Client management section
+- 🛒 Rentals: `http://localhost:8100/alquileres-list`	Assign movies to clients with dates and automatic pricing
 
 📌 The POST operation is done by clicking the yellow “+” button at the top-right corner.
 PUT and DELETE are available within the same record line.
@@ -246,8 +242,8 @@ Inside the project root, you’ll find a folder named _tables imports_.
 It contains sample .json data for all tables — data you can import into MySQL Workbench to start testing the application.
 
 ## ✒️ _Author_ 
-Eduardo Estévez Lemes
 
+### Eduardo Estévez Lemes
 💻 Developer of the TapeLab project (PGL – UT_1)
 
 ## 📜 _License_
