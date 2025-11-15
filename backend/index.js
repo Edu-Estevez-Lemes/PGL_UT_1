@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require("express");
 const db = require("./models");
 const cors = require("cors");
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
 require("./routes/cliente.routes")(app);
 require("./routes/pelicula.routes")(app);
 require("./routes/alquiler.routes")(app);
+require("./routes/auth.routes")(app);
 
 // Arrancar servidor
 const PORT = process.env.PORT || 8080;

@@ -1,0 +1,61 @@
+.page-bg {
+  --background: #000;
+  color: #fff;
+}
+
+ion-toolbar {
+  --background: #111;
+  --color: #fff;
+}
+
+.logo-zone {
+  text-align: center;
+  margin: 30px 0 10px 0;
+
+  .logo-icon {
+    font-size: 3rem;
+    color: #f2c94c;
+  }
+
+  h1 {
+    margin-top: 8px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  p {
+    margin-top: 4px;
+    color: #ccc;
+    font-size: 0.9rem;
+  }
+}
+
+.auth-card {
+  background: #111;
+  border-radius: 16px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.6);
+}
+
+ion-item {
+  --background: #111;
+  color: #fff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+ion-label {
+  color: #f2c94c;
+}
+
+.auth-btn {
+  margin-top: 18px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 12px rgba(242, 201, 76, 0.5);
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 8px;
+}

@@ -1,0 +1,110 @@
+<ion-header translucent="true">
+  <ion-toolbar color="dark">
+    <ion-title>TapeLab · Acceso</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding page-bg">
+  <div class="logo-zone">
+    <ion-icon name="film-outline" class="logo-icon"></ion-icon>
+    <h1>TapeLab</h1>
+    <p>Gestiona tu videoclub con estilo</p>
+  </div>
+
+  <ion-card class="auth-card">
+    <ion-card-header>
+      <ion-segment [(ngModel)]="mode" value="login" mode="md">
+        <ion-segment-button value="login">
+          <ion-label>Sign In</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="register">
+          <ion-label>Sign Up</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- LOGIN -->
+      <ng-container *ngIf="mode === 'login'">
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input
+            [(ngModel)]="loginData.email"
+            type="email"
+            autocomplete="email"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input
+            [(ngModel)]="loginData.password"
+            type="password"
+            autocomplete="current-password"
+          ></ion-input>
+        </ion-item>
+
+        <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+        <ion-button
+          expand="block"
+          color="warning"
+          class="auth-btn"
+          (click)="onLogin()"
+        >
+          Sign In
+        </ion-button>
+      </ng-container>
+
+      <!-- REGISTER -->
+      <ng-container *ngIf="mode === 'register'">
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input [(ngModel)]="registerData.nombre"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input
+            [(ngModel)]="registerData.email"
+            type="email"
+            autocomplete="email"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Teléfono (opcional)</ion-label>
+          <ion-input [(ngModel)]="registerData.telefono"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input
+            [(ngModel)]="registerData.password"
+            type="password"
+            autocomplete="new-password"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Repite Password</ion-label>
+          <ion-input
+            [(ngModel)]="registerData.confirmPassword"
+            type="password"
+          ></ion-input>
+        </ion-item>
+
+        <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+        <ion-button
+          expand="block"
+          color="warning"
+          class="auth-btn"
+          (click)="onRegister()"
+        >
+          Crear cuenta
+        </ion-button>
+      </ng-container>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

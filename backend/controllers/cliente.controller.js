@@ -25,7 +25,9 @@ exports.create = (req, res) => {
 
 // Obtener todos los clientes
 exports.findAll = (req, res) => {
-  Cliente.findAll()
+  Cliente.findAll({
+    attributes: {exclude: ['password_hash']}  // Ocultamos la contraseña haseada en las respuestas a las solicitudes
+  })
     .then(data => res.send(data))
     .catch(err => res.status(500).send({ message: err.message }));
 };
@@ -33,7 +35,9 @@ exports.findAll = (req, res) => {
 // Obtener un cliente por ID
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Cliente.findByPk(id)
+  Cliente.findByPk(id, {
+    attributes: { exclude: ['password_hash'] } 
+  })
     .then(data => {
       if (data) res.send(data);
       else res.status(404).send({ message: `No existe cliente con id=${id}` });
