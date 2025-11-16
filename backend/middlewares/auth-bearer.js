@@ -8,7 +8,7 @@ module.exports = async function(req, res, next) {
   const token = h.slice(7);
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await db.clientes.findByPk(payload.sub); // 👈 clientes, no usuarios
+    const user = await db.clientes.findByPk(payload.sub);
     if (!user) return res.status(401).send('Invalid token');
     req.user = user;
     req.jwt = payload;

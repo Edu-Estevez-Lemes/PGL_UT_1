@@ -6,7 +6,7 @@ const db = require('../models');
 const Cliente = db.clientes;
 const SALT_ROUNDS = 10;
 
-// ───────────────── REGISTRO (JSON) ─────────────────
+
 exports.register = async (req, res) => {
   try {
     const { nombre, email, password, telefono } = req.body;
@@ -24,12 +24,16 @@ exports.register = async (req, res) => {
 
     const password_hash = await bcrypt.hash(password, SALT_ROUNDS);
 
+    // SI viene imagen (multer), guardamos el nombre de fichero
+    const imagen = req.file ? req.file.filename : null;
+
     const c = await Cliente.create({
       nombre,
       email,
       telefono: telefono || '',
       password_hash,
       rol: 'user',
+      imagen        // <-- nuevo campo
     });
 
     // NO devolvemos el hash
@@ -38,6 +42,7 @@ exports.register = async (req, res) => {
       nombre: c.nombre,
       email: c.email,
       rol: c.rol,
+      imagen: c.imagen
     });
   } catch (e) {
     console.error('❌ Error en register:', e);
@@ -46,7 +51,6 @@ exports.register = async (req, res) => {
 };
 
 // ───────────────── LOGIN BASIC (para el PDF) ─────────────────
-// GET /api/auth/login con cabecera Authorization: Basic xxx
 exports.loginBasic = async (req, res) => {
   try {
     const h = req.headers['authorization'] || '';
@@ -88,8 +92,8 @@ exports.loginBasic = async (req, res) => {
   }
 };
 
-// ───────────────── LOGIN JSON (para Ionic / Postman JSON) ─────────────────
-// POST /api/auth/login  { "email": "...", "password": "..." }
+
+
 exports.loginJson = async (req, res) => {
   try {
     const { email, password } = req.body;

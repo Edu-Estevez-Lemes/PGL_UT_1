@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,37 +9,23 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class HomePage implements OnInit {
-  hora: string = '';
-  fecha: string = '';
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    this.actualizarFechaHora();
-    setInterval(() => this.actualizarFechaHora(), 1000);
+    // Ya NO usamos fecha ni hora porque se quitaron del HTML
+    // así que no llamamos a setInterval ni a actualizarFechaHora()
   }
 
-  actualizarFechaHora() {
-    const ahora = new Date();
-
-    const opcionesHora = {
-      timeZone: 'Atlantic/Canary',
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    } as const;
-
-    const opcionesFecha = {
-      timeZone: 'Atlantic/Canary',
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    } as const;
-
-    this.hora = ahora.toLocaleTimeString('es-ES', opcionesHora);
-    this.fecha = ahora.toLocaleDateString('es-ES', opcionesFecha);
+  // Método de logout – limpia el token y vuelve al login
+  logout() {
+    this.authService.logout();  // Borra token
+    this.router.navigate(['/login']); // Redirige al login
   }
+
 }
+
 

@@ -1,3 +1,4 @@
+// frontend/src/app/auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
@@ -44,7 +45,7 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  /** Login contra /api/auth/login */
+  /** Login contra /api/auth/login (JSON) */
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/login`, { email, password })
@@ -57,13 +58,37 @@ export class AuthService {
       );
   }
 
-  /** Registro contra /api/auth/register */
-  register(nombre: string, email: string, password: string, telefono?: string) {
+  /** Registro contra /api/auth/register
+   *  Si viene imagen -> multipart/form-data
+   *  Si no -> JSON normal
+   */
+  register(data: {
+    nombre: string;
+    email: string;
+    password: string;
+    telefono?: string;
+    imagen?: Blob | null;
+  }) {
+    if (data.imagen) {
+      const fd = new FormData();
+      fd.append('nombre', data.nombre);
+      fd.append('email', data.email);
+      fd.append('password', data.password);
+      if (data.telefono) {
+        fd.append('telefono', data.telefono);
+      }
+      // el nombre de campo **imagen** debe coincidir con upload.single('imagen')
+      fd.append('imagen', data.imagen, 'avatar.jpg');
+
+      return this.http.post(`${this.apiUrl}/register`, fd);
+    }
+
+    // Sin foto: JSON normal
     return this.http.post(`${this.apiUrl}/register`, {
-      nombre,
-      email,
-      password,
-      telefono: telefono || ''
+      nombre: data.nombre,
+      email: data.email,
+      password: data.password,
+      telefono: data.telefono || '',
     });
   }
 
