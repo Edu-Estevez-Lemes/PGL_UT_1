@@ -39,15 +39,21 @@ Antes de comenzar, asegúrate de tener instalado:
 
 - 1- Entra en la carpeta /backend,
 - 2- Allí encontrarás el archivo .env.example con las variables de entorno.
-- 3- Instala dependencias y arranca el servidor:
+- 3- Instala dependencias:
   
     `npm install`
+
+- 4- Ejecuta los seeders para poblar la base de datos con registros iniciales (películas, clientes y alquileres):
+
+    `npx sequelize-cli db:seed:all`
+
+- 5- Arranca el servidor
   
     `npm start`
 
 > El backend se ejecutará en http://localhost:8080
 
-_El Backend arranca con el archivo index.js_ `node index.js`
+_El Backend arranca con el archivo index.js:_ `node index.js`
 
 ### 3️⃣ Configurar el frontend
 
@@ -56,6 +62,7 @@ _El Backend arranca con el archivo index.js_ `node index.js`
 - 2- Instala dependencias:
 
   `npm install`
+
 - 3- Arranca el servidor de desarrollo:
 
   `ionic serve`
@@ -67,14 +74,26 @@ _El Backend arranca con el archivo index.js_ `node index.js`
 ## ⚙️ Ejecutando pruebas básicas
 
 Comprueba que puedes acceder a los endpoints desde POSTMAN:
+
+### 🚨 ¡Importante: Autenticación Requerida! 🚨
+
+  El backend ha implementado Token Bearer y Autenticación Básica (Basic Auth), junto con bcrypt para la seguridad de contraseñas. Por lo tanto, debes autenticarte en Postman antes de intentar acceder a los endpoints del CRUD.
+
+  Para realizar las pruebas:
+
+  Autenticación: Usa los métodos de autenticación (Basic Auth o Bearer Token) proporcionados por la aplicación en tu cliente de Postman (o la cabecera Authorization manual).
+
+#### Endpoints de Prueba: Una vez autenticado, verifica que puedes interactuar con las siguientes rutas:
+
+  **GET** /api/peliculas; **POST** /api/peliculas; **DELETE** /api/peliculas; **PUT** /api/peliculas
+
+  **GET** /api/clientes; **POST** /api/clientes; **DELETE** /api/clientes; **PUT** /api/clientes
+
+  **GET** /api/alquileres; **POST** /api/alquileres; **DELETE** /api/alquileres; **PUT** /api/alquileres
+
+
 ENLACE ENDPOINTS POSTMAN: `https://www.postman.com/eduardoestevezlemes/workspace/pgl-public/collection/38847486-14d35469-ee56-48a9-928c-57e9fa55c451?action=share&source=copy-link&creator=38847486`
 
-
-- _**GET** /api/peliculas; **POST** /api/peliculas; **DELETE** /api/peliculas; **PUT** /api/peliculas_
-
-- _**GET** /api/clientes; **POST** /api/clientes; **DELETE** /api/clientes; **PUT** /api/clientes_
-
-- _**GET** /api/alquileres; **POST** /api/alquileres; **DELETE** /api/alquileres; **PUT** /api/alquileres_
 
 Verifica que puedes crear, editar y eliminar registros desde la interfaz.
 
@@ -107,14 +126,6 @@ Pantalla	Descripción
 ### El POST en la aplicación se realiza pulsando el + en la esquina superior derecha (Círculo amarillo). El PUT y el DELETE están en la misma línea del registro.
 
 ---
-
-### 💾🗂️ Datos de tablas.
-
-Dentro de la raiz del proyecto se encuentra la carpeta _tables imports_. En ella se encuentran en formato .json los datos de los registros de las tablas. Datos que se pueden importar desde _Workbench_ a cada tabla.
-Son registros para empezar a probar la aplicación.
-
----
-
 
 ## ✒️ Autor
 
@@ -236,10 +247,6 @@ Screen	Description
 📌 The POST operation is done by clicking the yellow “+” button at the top-right corner.
 PUT and DELETE are available within the same record line.
 
-## 💾🗂️ _Table Data_
-
-Inside the project root, you’ll find a folder named _tables imports_.
-It contains sample .json data for all tables — data you can import into MySQL Workbench to start testing the application.
 
 ## ✒️ _Author_ 
 
