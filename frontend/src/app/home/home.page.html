@@ -1,47 +1,70 @@
 <ion-header translucent>
   <ion-toolbar color="dark">
     <ion-title>TapeLab</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" class="logout-btn">
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen class="home-bg">
-  <ion-grid fixed>
-    <ion-row class="ion-justify-content-center ion-text-center">
-      <ion-col size="12">
-        <h1 class="app-title">🎬 Bienvenido a TapeLab 🎬</h1>
-        <p class="subtitle">Explora, alquila y disfruta del mejor contenido</p>
+  <!-- Fondo animado con iconos de cine -->
+  <div class="cine-bg">
+    <!-- grupo 1 -->
+    <div class="cine-icon i1"><ion-icon name="film-outline"></ion-icon></div>
+    <div class="cine-icon i2"><ion-icon name="videocam-outline"></ion-icon></div>
+    <div class="cine-icon i3"><ion-icon name="tv-outline"></ion-icon></div>
+    <div class="cine-icon i4"><ion-icon name="play-circle-outline"></ion-icon></div>
+    <div class="cine-icon i5"><ion-icon name="musical-notes-outline"></ion-icon></div>
+    <div class="cine-icon i6"><ion-icon name="disc-outline"></ion-icon></div>
+    <div class="cine-icon i7"><ion-icon name="star-outline"></ion-icon></div>
 
-        <!-- 🕒 Reloj -->
-        <div class="reloj">
-          <h2>{{ hora }}</h2>
-          <p>{{ fecha }}</p>
-        </div>
-      </ion-col>
-    </ion-row>
+    <!-- Grupo 2 -->
+    <div class="cine-icon i8"><ion-icon name="film-outline"></ion-icon></div>
+    <div class="cine-icon i9"><ion-icon name="videocam-outline"></ion-icon></div>
+    <div class="cine-icon i10"><ion-icon name="star-outline"></ion-icon></div>
+    <div class="cine-icon i11"><ion-icon name="play-circle-outline"></ion-icon></div>
+    <div class="cine-icon i12"><ion-icon name="tv-outline"></ion-icon></div>
+  </div>
 
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-md="4">
-        <ion-card button routerLink="/videoclub-list" class="keycard">
-          <ion-icon name="film-outline"></ion-icon>
-          <p>Películas</p>
-        </ion-card>
-      </ion-col>
+  <!-- Contenido principal por encima del fondo -->
+  <div class="home-wrapper">
+    <ion-grid fixed>
+      <ion-row class="ion-justify-content-center ion-text-center">
+        <ion-col size="12">
+          <!-- LOGO -->
+          <img src="assets/img/tapelab-logo.png" class="tapelab-logo-home" />
+          <p class="home-subtitle">Explora, alquila y disfruta del mejor contenido</p>
+        </ion-col>
+      </ion-row>
 
-      <ion-col size="12" size-md="4">
-        <ion-card button routerLink="/clientes-list" class="keycard">
-          <ion-icon name="people-outline"></ion-icon>
-          <p>Clientes</p>
-        </ion-card>
-      </ion-col>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-md="4">
+          <ion-card button routerLink="/videoclub-list" class="keycard">
+            <ion-icon name="film-outline"></ion-icon>
+            <p>Películas</p>
+          </ion-card>
+        </ion-col>
 
-      <ion-col size="12" size-md="4">
-        <ion-card button routerLink="/alquileres-list" class="keycard">
-          <ion-icon name="cart-outline"></ion-icon>
-          <p>Alquileres</p>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <ion-col size="12" size-md="4">
+          <ion-card button routerLink="/clientes-list" class="keycard">
+            <ion-icon name="people-outline"></ion-icon>
+            <p>Clientes</p>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12" size-md="4">
+          <ion-card button routerLink="/alquileres-list" class="keycard">
+            <ion-icon name="cart-outline"></ion-icon>
+            <p>Alquileres</p>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
 
 <ion-footer>

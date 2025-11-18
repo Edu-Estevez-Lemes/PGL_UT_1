@@ -1,5 +1,4 @@
 // Guarda imágenes en /public/images
-// Nombre de archivo: img-YYYYMMDD-HHMMSS-mmm-<rand><ext>
 
 const multer = require('multer');
 const path = require('path');
